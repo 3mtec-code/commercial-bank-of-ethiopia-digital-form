@@ -122,6 +122,18 @@ abstract class AppLocalizations {
   /// **'Easy • Secure • Fast'**
   String get serviceSubtitle;
 
+  /// No description provided for @secureBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure Bank'**
+  String get secureBank;
+
+  /// No description provided for @yourTransactionSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Your transaction is safe with us'**
+  String get yourTransactionSafe;
+
   /// No description provided for @selectLanguage.
   ///
   /// In en, this message translates to:
@@ -176,6 +188,60 @@ abstract class AppLocalizations {
   /// **'Fill digital withdrawal form'**
   String get fillWithdrawalForm;
 
+  /// No description provided for @whyDigitalForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Why Digital Form?'**
+  String get whyDigitalForm;
+
+  /// No description provided for @noMorePaper.
+  ///
+  /// In en, this message translates to:
+  /// **'No more paper'**
+  String get noMorePaper;
+
+  /// No description provided for @noMorePaperDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Save trees and go 100% digital'**
+  String get noMorePaperDesc;
+
+  /// No description provided for @fastAndAccurate.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast & accurate'**
+  String get fastAndAccurate;
+
+  /// No description provided for @fastAndAccurateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic calculation and instant teller scan'**
+  String get fastAndAccurateDesc;
+
+  /// No description provided for @secureAndReliable.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure & reliable'**
+  String get secureAndReliable;
+
+  /// No description provided for @secureAndReliableDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'End-to-end encrypted single-use QR'**
+  String get secureAndReliableDesc;
+
+  /// No description provided for @easyToUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy to use'**
+  String get easyToUse;
+
+  /// No description provided for @easyToUseDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple 3-step digital form assistance'**
+  String get easyToUseDesc;
+
   /// No description provided for @home.
   ///
   /// In en, this message translates to:
@@ -193,12 +259,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'History'**
   String get history;
-
-  /// No description provided for @notifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications'**
-  String get notifications;
 
   /// No description provided for @profile.
   ///
@@ -218,17 +278,77 @@ abstract class AppLocalizations {
   /// **'Choose the form you want to fill'**
   String get chooseForm;
 
-  /// No description provided for @fillForm.
+  /// No description provided for @cashDepositVoucher.
   ///
   /// In en, this message translates to:
-  /// **'Fill Form'**
-  String get fillForm;
+  /// **'Cash Deposit Voucher'**
+  String get cashDepositVoucher;
 
-  /// No description provided for @stepOf.
+  /// No description provided for @fillDepositSlip.
   ///
   /// In en, this message translates to:
-  /// **'Step {current} of {total}'**
-  String stepOf(Object current, Object total);
+  /// **'Fill digital deposit slip'**
+  String get fillDepositSlip;
+
+  /// No description provided for @cashWithdrawalForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Withdrawal Form'**
+  String get cashWithdrawalForm;
+
+  /// No description provided for @fillWithdrawalSlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill digital withdrawal slip'**
+  String get fillWithdrawalSlip;
+
+  /// No description provided for @stepAccountInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Info'**
+  String get stepAccountInfo;
+
+  /// No description provided for @stepDenominations.
+  ///
+  /// In en, this message translates to:
+  /// **'Denominations'**
+  String get stepDenominations;
+
+  /// No description provided for @stepDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get stepDetails;
+
+  /// No description provided for @step1Of3.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 1 of 3'**
+  String get step1Of3;
+
+  /// No description provided for @step2Of3.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 2 of 3'**
+  String get step2Of3;
+
+  /// No description provided for @step3Of3.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 3 of 3'**
+  String get step3Of3;
+
+  /// No description provided for @fillDepositVoucher.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill Deposit Voucher'**
+  String get fillDepositVoucher;
+
+  /// No description provided for @fillWithdrawalFormHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill Withdrawal Form'**
+  String get fillWithdrawalFormHeader;
 
   /// No description provided for @branch.
   ///
@@ -248,11 +368,11 @@ abstract class AppLocalizations {
   /// **'Date'**
   String get date;
 
-  /// No description provided for @accountHolder.
+  /// No description provided for @accountHolderWithSurname.
   ///
   /// In en, this message translates to:
-  /// **'Account Holder Name'**
-  String get accountHolder;
+  /// **'Account Holder (with surname)'**
+  String get accountHolderWithSurname;
 
   /// No description provided for @accountNumber.
   ///
@@ -284,6 +404,18 @@ abstract class AppLocalizations {
   /// **'Special Demand Deposit Account'**
   String get specialDemand;
 
+  /// No description provided for @birrInFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'Birr in Figure'**
+  String get birrInFigure;
+
+  /// No description provided for @passBookNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass book must accompany this form'**
+  String get passBookNote;
+
   /// No description provided for @next.
   ///
   /// In en, this message translates to:
@@ -296,35 +428,107 @@ abstract class AppLocalizations {
   /// **'Back'**
   String get back;
 
-  /// No description provided for @denominations.
+  /// No description provided for @errorSelectBranch.
   ///
   /// In en, this message translates to:
-  /// **'Denominations'**
-  String get denominations;
+  /// **'Please select branch'**
+  String get errorSelectBranch;
 
-  /// No description provided for @denomination.
+  /// No description provided for @errorSelectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select date'**
+  String get errorSelectDate;
+
+  /// No description provided for @errorAccountHolderRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Account holder name is required'**
+  String get errorAccountHolderRequired;
+
+  /// No description provided for @errorLettersOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must contain letters only'**
+  String get errorLettersOnly;
+
+  /// No description provided for @errorMin3Chars.
+  ///
+  /// In en, this message translates to:
+  /// **'Must be at least 3 characters'**
+  String get errorMin3Chars;
+
+  /// No description provided for @errorAccountNumberRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number is required'**
+  String get errorAccountNumberRequired;
+
+  /// No description provided for @errorAccountNumber13Digits.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number must be exactly 13 digits'**
+  String get errorAccountNumber13Digits;
+
+  /// No description provided for @quickPresetAmounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Preset Amounts'**
+  String get quickPresetAmounts;
+
+  /// No description provided for @manualCustomEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Custom Entry'**
+  String get manualCustomEntry;
+
+  /// No description provided for @denominationBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Breakdown'**
+  String get denominationBreakdown;
+
+  /// No description provided for @customAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Amount (ETB)'**
+  String get customAmount;
+
+  /// No description provided for @enterAmountHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter amount in Birr'**
+  String get enterAmountHint;
+
+  /// No description provided for @denominationHeader.
   ///
   /// In en, this message translates to:
   /// **'Denomination (ETB)'**
-  String get denomination;
+  String get denominationHeader;
 
-  /// No description provided for @quantity.
+  /// No description provided for @quantityHeader.
   ///
   /// In en, this message translates to:
   /// **'Quantity'**
-  String get quantity;
+  String get quantityHeader;
 
-  /// No description provided for @amount.
+  /// No description provided for @amountHeader.
   ///
   /// In en, this message translates to:
   /// **'Amount'**
-  String get amount;
+  String get amountHeader;
 
-  /// No description provided for @grandTotal.
+  /// No description provided for @total.
   ///
   /// In en, this message translates to:
-  /// **'Grand Total'**
-  String get grandTotal;
+  /// **'Total'**
+  String get total;
+
+  /// No description provided for @errorEnterDenomination.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid amount'**
+  String get errorEnterDenomination;
 
   /// No description provided for @otherDetails.
   ///
@@ -338,17 +542,77 @@ abstract class AppLocalizations {
   /// **'Amount in Words'**
   String get amountInWords;
 
+  /// No description provided for @errorAmountInWordsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter amount in words'**
+  String get errorAmountInWordsRequired;
+
   /// No description provided for @sourceOfProceeds.
   ///
   /// In en, this message translates to:
   /// **'Source of Proceeds'**
   String get sourceOfProceeds;
 
-  /// No description provided for @phoneNumber.
+  /// No description provided for @selectSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Select source'**
+  String get selectSource;
+
+  /// No description provided for @sourceSalary.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
+  String get sourceSalary;
+
+  /// No description provided for @sourceBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get sourceBusiness;
+
+  /// No description provided for @sourceRemittance.
+  ///
+  /// In en, this message translates to:
+  /// **'Remittance'**
+  String get sourceRemittance;
+
+  /// No description provided for @sourceSavings.
+  ///
+  /// In en, this message translates to:
+  /// **'Savings'**
+  String get sourceSavings;
+
+  /// No description provided for @sourceInvestment.
+  ///
+  /// In en, this message translates to:
+  /// **'Investment'**
+  String get sourceInvestment;
+
+  /// No description provided for @sourceOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get sourceOther;
+
+  /// No description provided for @telephoneNumber.
   ///
   /// In en, this message translates to:
   /// **'Telephone Number'**
-  String get phoneNumber;
+  String get telephoneNumber;
+
+  /// No description provided for @errorPhoneRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Telephone number is required'**
+  String get errorPhoneRequired;
+
+  /// No description provided for @errorPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter valid Ethiopian phone (09..., 07..., or +251...)'**
+  String get errorPhoneInvalid;
 
   /// No description provided for @depositedBy.
   ///
@@ -362,41 +626,65 @@ abstract class AppLocalizations {
   /// **'Withdrawn By'**
   String get withdrawnBy;
 
-  /// No description provided for @signature.
+  /// No description provided for @errorDepositorRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Depositor name is required'**
+  String get errorDepositorRequired;
+
+  /// No description provided for @signatureLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Signature'**
+  String get signatureLabel;
+
+  /// No description provided for @depositedBySignature.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposited By Signature'**
+  String get depositedBySignature;
+
+  /// No description provided for @accountHolderSignature.
   ///
   /// In en, this message translates to:
   /// **'Account Holder Signature'**
-  String get signature;
+  String get accountHolderSignature;
 
-  /// No description provided for @signHere.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign Here'**
-  String get signHere;
-
-  /// No description provided for @clearSignature.
+  /// No description provided for @clear.
   ///
   /// In en, this message translates to:
   /// **'Clear'**
-  String get clearSignature;
+  String get clear;
 
-  /// No description provided for @passBookNote.
+  /// No description provided for @errorSignatureRequired.
   ///
   /// In en, this message translates to:
-  /// **'Pass book must accompany this form'**
-  String get passBookNote;
+  /// **'Please provide your signature'**
+  String get errorSignatureRequired;
 
   /// No description provided for @review.
   ///
   /// In en, this message translates to:
-  /// **'Review Your Form'**
+  /// **'Review'**
   String get review;
 
-  /// No description provided for @reviewSubtitle.
+  /// No description provided for @reviewYourForm.
   ///
   /// In en, this message translates to:
-  /// **'Please verify all details before confirming'**
-  String get reviewSubtitle;
+  /// **'Review Your Form'**
+  String get reviewYourForm;
+
+  /// No description provided for @amountFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (Figure)'**
+  String get amountFigure;
+
+  /// No description provided for @amountWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (Words)'**
+  String get amountWords;
 
   /// No description provided for @edit.
   ///
@@ -407,20 +695,26 @@ abstract class AppLocalizations {
   /// No description provided for @confirm.
   ///
   /// In en, this message translates to:
-  /// **'Confirm & Generate QR'**
+  /// **'Confirm'**
   String get confirm;
 
-  /// No description provided for @formSubmitted.
+  /// No description provided for @formSubmittedSuccess.
   ///
   /// In en, this message translates to:
   /// **'Form Submitted Successfully!'**
-  String get formSubmitted;
+  String get formSubmittedSuccess;
 
   /// No description provided for @referenceNumber.
   ///
   /// In en, this message translates to:
   /// **'Reference Number'**
   String get referenceNumber;
+
+  /// No description provided for @refCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference number copied to clipboard!'**
+  String get refCopied;
 
   /// No description provided for @scanQrAtBank.
   ///
@@ -434,11 +728,11 @@ abstract class AppLocalizations {
   /// **'Expires in'**
   String get expiresIn;
 
-  /// No description provided for @downloadPDF.
+  /// No description provided for @downloadPdf.
   ///
   /// In en, this message translates to:
   /// **'Download PDF'**
-  String get downloadPDF;
+  String get downloadPdf;
 
   /// No description provided for @done.
   ///
@@ -446,83 +740,11 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get done;
 
-  /// No description provided for @scanQrCode.
+  /// No description provided for @errorExportPdf.
   ///
   /// In en, this message translates to:
-  /// **'Scan QR Code'**
-  String get scanQrCode;
-
-  /// No description provided for @alignQr.
-  ///
-  /// In en, this message translates to:
-  /// **'Align the QR code within the frame'**
-  String get alignQr;
-
-  /// No description provided for @scanning.
-  ///
-  /// In en, this message translates to:
-  /// **'Scanning...'**
-  String get scanning;
-
-  /// No description provided for @verified.
-  ///
-  /// In en, this message translates to:
-  /// **'Verified'**
-  String get verified;
-
-  /// No description provided for @formDetails.
-  ///
-  /// In en, this message translates to:
-  /// **'Form Details'**
-  String get formDetails;
-
-  /// No description provided for @cashDepositVoucher.
-  ///
-  /// In en, this message translates to:
-  /// **'Cash Deposit Voucher'**
-  String get cashDepositVoucher;
-
-  /// No description provided for @cashWithdrawalForm.
-  ///
-  /// In en, this message translates to:
-  /// **'Cash Withdrawal Form'**
-  String get cashWithdrawalForm;
-
-  /// No description provided for @proceed.
-  ///
-  /// In en, this message translates to:
-  /// **'Proceed'**
-  String get proceed;
-
-  /// No description provided for @status.
-  ///
-  /// In en, this message translates to:
-  /// **'Status'**
-  String get status;
-
-  /// No description provided for @pending.
-  ///
-  /// In en, this message translates to:
-  /// **'Pending'**
-  String get pending;
-
-  /// No description provided for @completed.
-  ///
-  /// In en, this message translates to:
-  /// **'Completed'**
-  String get completed;
-
-  /// No description provided for @expired.
-  ///
-  /// In en, this message translates to:
-  /// **'Expired'**
-  String get expired;
-
-  /// No description provided for @transactionHistory.
-  ///
-  /// In en, this message translates to:
-  /// **'Transaction History'**
-  String get transactionHistory;
+  /// **'Failed to export PDF'**
+  String get errorExportPdf;
 
   /// No description provided for @noHistory.
   ///
@@ -530,65 +752,215 @@ abstract class AppLocalizations {
   /// **'No transactions yet'**
   String get noHistory;
 
-  /// No description provided for @accountNumberValidation.
+  /// No description provided for @noHistorySub.
   ///
   /// In en, this message translates to:
-  /// **'Account number must be 13 digits'**
-  String get accountNumberValidation;
+  /// **'Your submitted forms and vouchers will appear here'**
+  String get noHistorySub;
 
-  /// No description provided for @requiredField.
+  /// No description provided for @status.
   ///
   /// In en, this message translates to:
-  /// **'This field is required'**
-  String get requiredField;
+  /// **'Status'**
+  String get status;
 
-  /// No description provided for @invalidPhone.
+  /// No description provided for @statusPending.
   ///
   /// In en, this message translates to:
-  /// **'Enter a valid phone number'**
-  String get invalidPhone;
+  /// **'Pending'**
+  String get statusPending;
 
-  /// No description provided for @signatureRequired.
+  /// No description provided for @statusCompleted.
   ///
   /// In en, this message translates to:
-  /// **'Please provide your signature'**
-  String get signatureRequired;
+  /// **'Completed'**
+  String get statusCompleted;
 
-  /// No description provided for @qrExpired.
+  /// No description provided for @statusExpired.
   ///
   /// In en, this message translates to:
-  /// **'QR Code Expired'**
-  String get qrExpired;
+  /// **'Expired'**
+  String get statusExpired;
 
-  /// No description provided for @qrExpiredMessage.
+  /// No description provided for @securityAndCompliance.
   ///
   /// In en, this message translates to:
-  /// **'This QR code has expired. Please generate a new one.'**
-  String get qrExpiredMessage;
+  /// **'Security & Compliance'**
+  String get securityAndCompliance;
 
-  /// No description provided for @generateNew.
+  /// No description provided for @encryptionStandard.
   ///
   /// In en, this message translates to:
-  /// **'Generate New QR'**
-  String get generateNew;
+  /// **'Encryption Standard'**
+  String get encryptionStandard;
 
-  /// No description provided for @secureTransaction.
+  /// No description provided for @encryptionValue.
   ///
   /// In en, this message translates to:
-  /// **'Your transaction is safe with us'**
-  String get secureTransaction;
+  /// **'AES-256 CBC'**
+  String get encryptionValue;
 
-  /// No description provided for @binInFigure.
+  /// No description provided for @qrLifespan.
   ///
   /// In en, this message translates to:
-  /// **'Bin in Figure'**
-  String get binInFigure;
+  /// **'QR Code Lifespan'**
+  String get qrLifespan;
 
-  /// No description provided for @binInWords.
+  /// No description provided for @qrLifespanValue.
   ///
   /// In en, this message translates to:
-  /// **'Bin in Words'**
-  String get binInWords;
+  /// **'5 Minutes'**
+  String get qrLifespanValue;
+
+  /// No description provided for @cbeContactCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'CBE Contact Center'**
+  String get cbeContactCenter;
+
+  /// No description provided for @cbeContactValue.
+  ///
+  /// In en, this message translates to:
+  /// **'951'**
+  String get cbeContactValue;
+
+  /// No description provided for @digitalBanking.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital Banking'**
+  String get digitalBanking;
+
+  /// No description provided for @digitalBankingValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Official CBE Form Service'**
+  String get digitalBankingValue;
+
+  /// No description provided for @preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences & Settings'**
+  String get preferences;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// No description provided for @lightMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Light Mode'**
+  String get lightMode;
+
+  /// No description provided for @languagePreference.
+  ///
+  /// In en, this message translates to:
+  /// **'Language Preference'**
+  String get languagePreference;
+
+  /// No description provided for @pushNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Push Notifications'**
+  String get pushNotifications;
+
+  /// No description provided for @clearCache.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Cache & Storage'**
+  String get clearCache;
+
+  /// No description provided for @clearCacheConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Cache'**
+  String get clearCacheConfirmTitle;
+
+  /// No description provided for @clearCacheConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to clear saved forms and cached data?'**
+  String get clearCacheConfirmMessage;
+
+  /// No description provided for @clearCacheSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache cleared successfully!'**
+  String get clearCacheSuccess;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'App Version'**
+  String get appVersion;
+
+  /// No description provided for @appVersionValue.
+  ///
+  /// In en, this message translates to:
+  /// **'v1.0.0'**
+  String get appVersionValue;
+
+  /// No description provided for @helpAndSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Help & Support / FAQ'**
+  String get helpAndSupport;
+
+  /// No description provided for @faqTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequently Asked Questions'**
+  String get faqTitle;
+
+  /// No description provided for @faqQ1.
+  ///
+  /// In en, this message translates to:
+  /// **'How does the digital form work?'**
+  String get faqQ1;
+
+  /// No description provided for @faqA1.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill the required details in 3 easy steps, generate your encrypted QR code, and show it to the teller at any CBE branch.'**
+  String get faqA1;
+
+  /// No description provided for @faqQ2.
+  ///
+  /// In en, this message translates to:
+  /// **'Do I need to print or bring paper?'**
+  String get faqQ2;
+
+  /// No description provided for @faqA2.
+  ///
+  /// In en, this message translates to:
+  /// **'No. The system is 100% paperless. The teller scans your QR code directly from your phone screen.'**
+  String get faqA2;
+
+  /// No description provided for @faqQ3.
+  ///
+  /// In en, this message translates to:
+  /// **'How long is the QR code valid?'**
+  String get faqQ3;
+
+  /// No description provided for @faqA3.
+  ///
+  /// In en, this message translates to:
+  /// **'For security reasons, each generated QR code is valid for 5 minutes.'**
+  String get faqA3;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
 }
 
 class _AppLocalizationsDelegate

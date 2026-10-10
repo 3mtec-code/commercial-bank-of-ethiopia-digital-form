@@ -9,16 +9,22 @@ class AppLocalizationsAm extends AppLocalizations {
   AppLocalizationsAm([String locale = 'am']) : super(locale);
 
   @override
-  String get appName => 'ሲቢኢ ዲጂታል ፎርም';
+  String get appName => 'የሲቢኢ ዲጂታል ቅጽ';
 
   @override
   String get bankName => 'የኢትዮጵያ ንግድ ባንክ';
 
   @override
-  String get serviceName => 'ዲጂታል ባንኪንግ ፎርም አገልግሎት';
+  String get serviceName => 'ዲጂታል ባንኪንግ ቅጽ አገልግሎት';
 
   @override
   String get serviceSubtitle => 'ቀላል • ደህንነቱ የተጠበቀ • ፈጣን';
+
+  @override
+  String get secureBank => 'አስተማማኝ ባንክ';
+
+  @override
+  String get yourTransactionSafe => 'ግብይትዎ ከእኛ ጋር ደህንነቱ የተጠበቀ ነው';
 
   @override
   String get selectLanguage => 'ቋንቋ ይምረጡ';
@@ -36,45 +42,97 @@ class AppLocalizationsAm extends AppLocalizations {
   String get welcomeSubtitle => 'ዛሬ እንዴት ልንረዳዎ እንችላለን?';
 
   @override
-  String get cashDeposit => 'ገንዘብ ማስቀመጥ';
+  String get cashDeposit => 'ጥሬ ገንዘብ ማስቀመጥ';
 
   @override
-  String get cashWithdrawal => 'ገንዘብ ማውጣት';
+  String get cashWithdrawal => 'ጥሬ ገንዘብ ማውጣት';
 
   @override
-  String get fillDepositForm => 'ዲጂታል የገቢ ፎርም ይሙሉ';
+  String get fillDepositForm => 'ዲጂታል የገቢ ቅጽ ይሙሉ';
 
   @override
-  String get fillWithdrawalForm => 'ዲጂታል የወጪ ፎርም ይሙሉ';
+  String get fillWithdrawalForm => 'ዲጂታል የወጪ ቅጽ ይሙሉ';
 
   @override
-  String get home => 'ዋና ገፅ';
+  String get whyDigitalForm => 'ለምን ዲጂታል ቅጽ?';
 
   @override
-  String get myForms => 'ፎርሞቼ';
+  String get noMorePaper => 'ወረቀት አይጠቀሙ';
+
+  @override
+  String get noMorePaperDesc => 'ዛፎችን ያድኑ እና 100% ዲጂታል ይሁኑ';
+
+  @override
+  String get fastAndAccurate => 'ፈጣን እና ትክክለኛ';
+
+  @override
+  String get fastAndAccurateDesc => 'ራስ-ሰር ስሌት እና ፈጣን የቴለር ቅኝት';
+
+  @override
+  String get secureAndReliable => 'ደህንነቱ የተጠበቀ እና አስተማማኝ';
+
+  @override
+  String get secureAndReliableDesc => 'ከመጨረሻ እስከ መጨረሻ የተመሰጠረ የአንድ ጊዜ QR';
+
+  @override
+  String get easyToUse => 'ለመጠቀም ቀላል';
+
+  @override
+  String get easyToUseDesc => 'ቀላል ባለ 3-ደረጃ ዲጂታል ቅጽ ድጋፍ';
+
+  @override
+  String get home => 'ዋና ገጽ';
+
+  @override
+  String get myForms => 'ቅጾቼ';
 
   @override
   String get history => 'ታሪክ';
 
   @override
-  String get notifications => 'ማሳወቂያዎች';
-
-  @override
   String get profile => 'መገለጫ';
 
   @override
-  String get selectFormType => 'የፎርም አይነት ይምረጡ';
+  String get selectFormType => 'የቅጽ አይነት ይምረጡ';
 
   @override
-  String get chooseForm => 'መሙላት የሚፈልጉትን ፎርም ይምረጡ';
+  String get chooseForm => 'መሙላት የሚፈልጉትን ቅጽ ይምረጡ';
 
   @override
-  String get fillForm => 'ፎርም ይሙሉ';
+  String get cashDepositVoucher => 'የጥሬ ገንዘብ ገቢ ቫውቸር';
 
   @override
-  String stepOf(Object current, Object total) {
-    return 'ደረጃ $current ከ $total';
-  }
+  String get fillDepositSlip => 'ዲጂታል የገቢ ሰነድ ይሙሉ';
+
+  @override
+  String get cashWithdrawalForm => 'የጥሬ ገንዘብ ወጪ ቅጽ';
+
+  @override
+  String get fillWithdrawalSlip => 'ዲጂታል የወጪ ሰነድ ይሙሉ';
+
+  @override
+  String get stepAccountInfo => 'የሂሳብ መረጃ';
+
+  @override
+  String get stepDenominations => 'የገንዘብ ኖቶች';
+
+  @override
+  String get stepDetails => 'ዝርዝሮች';
+
+  @override
+  String get step1Of3 => 'ደረጃ 1 ከ 3';
+
+  @override
+  String get step2Of3 => 'ደረጃ 2 ከ 3';
+
+  @override
+  String get step3Of3 => 'ደረጃ 3 ከ 3';
+
+  @override
+  String get fillDepositVoucher => 'የገቢ ቫውቸር ይሙሉ';
+
+  @override
+  String get fillWithdrawalFormHeader => 'የወጪ ቅጽ ይሙሉ';
 
   @override
   String get branch => 'ቅርንጫፍ';
@@ -86,7 +144,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get date => 'ቀን';
 
   @override
-  String get accountHolder => 'የሂሳብ ባለቤት ስም';
+  String get accountHolderWithSurname => 'የሂሳብ ባለቤት ስም (ከአያት ስም ጋር)';
 
   @override
   String get accountNumber => 'የሂሳብ ቁጥር';
@@ -101,7 +159,13 @@ class AppLocalizationsAm extends AppLocalizations {
   String get currentAccount => 'የወቅታዊ ሂሳብ';
 
   @override
-  String get specialDemand => 'ልዩ ፍላጎት ተቀማጭ ሂሳብ';
+  String get specialDemand => 'ልዩ ተፈላጊ ተቀማጭ ሂሳብ';
+
+  @override
+  String get birrInFigure => 'ብር በቁጥር';
+
+  @override
+  String get passBookNote => 'የቁጠባ ደብተር ከዚህ ቅጽ ጋር መቅረብ አለበት';
 
   @override
   String get next => 'ቀጣይ';
@@ -110,149 +174,272 @@ class AppLocalizationsAm extends AppLocalizations {
   String get back => 'ተመለስ';
 
   @override
-  String get denominations => 'የገንዘብ ዓይነቶች';
+  String get errorSelectBranch => 'እባክዎ ቅርንጫፍ ይምረጡ';
 
   @override
-  String get denomination => 'ዋጋ (ብር)';
+  String get errorSelectDate => 'እባክዎ ቀን ይምረጡ';
 
   @override
-  String get quantity => 'ብዛት';
+  String get errorAccountHolderRequired => 'የሂሳብ ባለቤት ስም ማስገባት ግዴታ ነው';
 
   @override
-  String get amount => 'መጠን';
+  String get errorLettersOnly => 'ስም ፊደላትን ብቻ መያዝ አለበት (ቁጥሮች እና ምልክቶች አይፈቀዱም)';
 
   @override
-  String get grandTotal => 'ጠቅላላ ድምር';
+  String get errorMin3Chars => 'ቢያንስ 3 ፊደላት መሆን አለበት';
 
   @override
-  String get otherDetails => 'ሌሎች ዝርዝሮች';
+  String get errorAccountNumberRequired => 'የሂሳብ ቁጥር ማስገባት ግዴታ ነው';
 
   @override
-  String get amountInWords => 'ስሌት በቃላት';
+  String get errorAccountNumber13Digits => 'የሂሳብ ቁጥር በትክክል 13 አሃዞች መሆን አለበት';
 
   @override
-  String get sourceOfProceeds => 'የገቢ ምንጭ';
+  String get quickPresetAmounts => 'ፈጣን መጠኖች';
 
   @override
-  String get phoneNumber => 'ስልክ ቁጥር';
+  String get manualCustomEntry => 'በእጅ ማስገባት';
 
   @override
-  String get depositedBy => 'ያስቀመጠ';
+  String get denominationBreakdown => 'የኖቶች ዝርዝር';
 
   @override
-  String get withdrawnBy => 'ያወጣ';
+  String get customAmount => 'የተመረጠ መጠን (ብር)';
 
   @override
-  String get signature => 'የሂሳብ ባለቤት ፊርማ';
+  String get enterAmountHint => 'የብር መጠን ያስገቡ';
 
   @override
-  String get signHere => 'እዚህ ይፈርሙ';
+  String get denominationHeader => 'የገንዘብ ኖት (ብር)';
 
   @override
-  String get clearSignature => 'አጥፋ';
+  String get quantityHeader => 'ብዛት';
 
   @override
-  String get passBookNote => 'ፓስ ቡክ ከዚህ ፎርም ጋር መቀጠል አለበት';
+  String get amountHeader => 'ድምር';
 
   @override
-  String get review => 'ፎርምዎን ይገምግሙ';
+  String get total => 'ጠቅላላ ድምር';
 
   @override
-  String get reviewSubtitle => 'ከማረጋገጥዎ በፊት ሁሉንም ዝርዝሮች ያረጋግጡ';
+  String get errorEnterDenomination => 'እባክዎ ትክክለኛ የብር መጠን ያስገቡ';
 
   @override
-  String get edit => 'አርትዕ';
+  String get otherDetails => 'ተጨማሪ ዝርዝሮች';
 
   @override
-  String get confirm => 'አረጋግጥ እና QR ፍጠር';
+  String get amountInWords => 'ብር በቃላት';
 
   @override
-  String get formSubmitted => 'ፎርም በተሳካ ሁኔታ ተልኳል!';
+  String get errorAmountInWordsRequired => 'እባክዎ መጠኑን በቃላት ያስገቡ';
+
+  @override
+  String get sourceOfProceeds => 'የገንዘብ ምንጭ';
+
+  @override
+  String get selectSource => 'ምንጭ ይምረጡ';
+
+  @override
+  String get sourceSalary => 'ደመወዝ';
+
+  @override
+  String get sourceBusiness => 'ንግድ';
+
+  @override
+  String get sourceRemittance => 'የውጭ ሀገር ሐዋላ';
+
+  @override
+  String get sourceSavings => 'ቁጠባ';
+
+  @override
+  String get sourceInvestment => 'ኢንቨስትመንት';
+
+  @override
+  String get sourceOther => 'ሌላ';
+
+  @override
+  String get telephoneNumber => 'ስልክ ቁጥር';
+
+  @override
+  String get errorPhoneRequired => 'ስልክ ቁጥር ማስገባት ግዴታ ነው';
+
+  @override
+  String get errorPhoneInvalid =>
+      'ትክክለኛ የኢትዮጵያ ስልክ ቁጥር ያስገቡ (ለምሳሌ 09...፣ 07... ወይም +251...)';
+
+  @override
+  String get depositedBy => 'ያስቀመጠው ሰው ስም';
+
+  @override
+  String get withdrawnBy => 'ያወጣው ሰው ስም';
+
+  @override
+  String get errorDepositorRequired => 'የአስቀማጭ ስም ማስገባት ግዴታ ነው';
+
+  @override
+  String get signatureLabel => 'ፊርማ';
+
+  @override
+  String get depositedBySignature => 'የአስቀማጭ ፊርማ';
+
+  @override
+  String get accountHolderSignature => 'የሂሳብ ባለቤት ፊርማ';
+
+  @override
+  String get clear => 'አጥፋ';
+
+  @override
+  String get errorSignatureRequired => 'እባክዎ ፊርማዎን ያስቀምጡ';
+
+  @override
+  String get review => 'ገምግም';
+
+  @override
+  String get reviewYourForm => 'ቅጽዎን ይገምግሙ';
+
+  @override
+  String get amountFigure => 'መጠን (በቁጥር)';
+
+  @override
+  String get amountWords => 'መጠን (በቃላት)';
+
+  @override
+  String get edit => 'አስተካክል';
+
+  @override
+  String get confirm => 'አረጋግጥ';
+
+  @override
+  String get formSubmittedSuccess => 'ቅጹ በተሳካ ሁኔታ ተልኳል!';
 
   @override
   String get referenceNumber => 'የማጣቀሻ ቁጥር';
 
   @override
-  String get scanQrAtBank => 'ይህን QR ኮድ ባንኩ ጋር ይቃኙ';
+  String get refCopied => 'የማጣቀሻ ቁጥር ተገልብጧል!';
 
   @override
-  String get expiresIn => 'ሚያበቃበት ጊዜ';
+  String get scanQrAtBank => 'ይህን የQR ኮድ በባንክ ቅርንጫፍ ያሳዩ';
 
   @override
-  String get downloadPDF => 'PDF አውርድ';
+  String get expiresIn => 'የሚያበቃበት ጊዜ';
 
   @override
-  String get done => 'ተጠናቀቀ';
+  String get downloadPdf => 'PDF አውርድ';
 
   @override
-  String get scanQrCode => 'QR ኮድ ቃኙ';
+  String get done => 'ተጠናቋል';
 
   @override
-  String get alignQr => 'QR ኮዱን ከፍሬሙ ውስጥ አስቀምጡ';
+  String get errorExportPdf => 'PDF ማመንጨት አልተሳካም';
 
   @override
-  String get scanning => 'በመቃኘት ላይ...';
+  String get noHistory => 'እስካሁን ምንም ቅጾች የሉም';
 
   @override
-  String get verified => 'ተረጋግጧል';
-
-  @override
-  String get formDetails => 'የፎርም ዝርዝሮች';
-
-  @override
-  String get cashDepositVoucher => 'የጥሬ ገንዘብ ተቀማጭ ቫውቸር';
-
-  @override
-  String get cashWithdrawalForm => 'የጥሬ ገንዘብ ወጪ ፎርም';
-
-  @override
-  String get proceed => 'ቀጥል';
+  String get noHistorySub => 'የላኳቸው ቅጾች እና ቫውቸሮች እዚህ ይታያሉ';
 
   @override
   String get status => 'ሁኔታ';
 
   @override
-  String get pending => 'በመጠባበቅ ላይ';
+  String get statusPending => 'በመጠባበቅ ላይ';
 
   @override
-  String get completed => 'ተጠናቅቋል';
+  String get statusCompleted => 'ተጠናቋል';
 
   @override
-  String get expired => 'ጊዜው አልፏል';
+  String get statusExpired => 'ጊዜው ያለፈበት';
 
   @override
-  String get transactionHistory => 'የግብይት ታሪክ';
+  String get securityAndCompliance => 'ደህንነት እና ተገዢነት';
 
   @override
-  String get noHistory => 'እስካሁን ምንም ግብይቶች የሉም';
+  String get encryptionStandard => 'የምስጠራ ደረጃ';
 
   @override
-  String get accountNumberValidation => 'የሂሳብ ቁጥር 13 አሃዝ መሆን አለበት';
+  String get encryptionValue => 'AES-256 CBC';
 
   @override
-  String get requiredField => 'ይህ መስክ ያስፈልጋል';
+  String get qrLifespan => 'የQR ኮድ ቆይታ';
 
   @override
-  String get invalidPhone => 'የሚሰራ ስልክ ቁጥር ያስገቡ';
+  String get qrLifespanValue => '5 ደቂቃዎች';
 
   @override
-  String get signatureRequired => 'እባክዎ ፊርማዎን ያቅርቡ';
+  String get cbeContactCenter => 'የሲቢኢ ጥሪ ማዕከል';
 
   @override
-  String get qrExpired => 'QR ኮድ ጊዜው አልፏል';
+  String get cbeContactValue => '951';
 
   @override
-  String get qrExpiredMessage => 'ይህ QR ኮድ ጊዜው አልፏል። አዲስ ይፍጠሩ።';
+  String get digitalBanking => 'ዲጂታል ባንኪንግ';
 
   @override
-  String get generateNew => 'አዲስ QR ፍጠር';
+  String get digitalBankingValue => 'ይፋዊ የሲቢኢ ዲጂታል ቅጽ አገልግሎት';
 
   @override
-  String get secureTransaction => 'ግብይትዎ ከእኛ ጋር ደህንነቱ የተጠበቀ ነው';
+  String get preferences => 'ምርጫዎች እና ማስተካከያዎች';
 
   @override
-  String get binInFigure => 'ቢን በቁጥር';
+  String get darkMode => 'የጨለማ ሁነታ';
 
   @override
-  String get binInWords => 'ቢን በቃላት';
+  String get lightMode => 'የብርሃን ሁነታ';
+
+  @override
+  String get languagePreference => 'የቋንቋ ምርጫ';
+
+  @override
+  String get pushNotifications => 'የማሳወቂያ መልዕክቶች';
+
+  @override
+  String get clearCache => 'መሸጎጫ እና ዳታ አጽዳ';
+
+  @override
+  String get clearCacheConfirmTitle => 'መሸጎጫ ማጽጃ';
+
+  @override
+  String get clearCacheConfirmMessage => 'ሁሉንም የተቀመጡ ቅጾች እና መሸጎጫ ማጽዳት ይፈልጋሉ?';
+
+  @override
+  String get clearCacheSuccess => 'መሸጎጫ በተሳካ ሁኔታ ጸድቷል!';
+
+  @override
+  String get cancel => 'ሰርዝ';
+
+  @override
+  String get appVersion => 'የመተግበሪያ ስሪት';
+
+  @override
+  String get appVersionValue => 'v1.0.0';
+
+  @override
+  String get helpAndSupport => 'እገዛ እና ድጋፍ / ተደጋጋሚ ጥያቄዎች';
+
+  @override
+  String get faqTitle => 'ተደጋጋሚ ጥያቄዎች';
+
+  @override
+  String get faqQ1 => 'ዲጂታል ቅጹ እንዴት ነው የሚሰራው?';
+
+  @override
+  String get faqA1 =>
+      'አስፈላጊውን መረጃ በ 3 ቀላል ደረጃዎች ይሙሉ፣ የተመሰጠረ የQR ኮድዎን ያመንጩ፣ እና በማንኛውም የኢትዮጵያ ንግድ ባንክ ቅርንጫፍ ለቴለሩ ያሳዩ።';
+
+  @override
+  String get faqQ2 => 'ወረቀት ማተም ወይም ይዤ መምጣት አለብኝ?';
+
+  @override
+  String get faqA2 =>
+      'አይ። ስርዓቱ 100% ከወረቀት ነፃ ነው። ቴለሩ በቀጥታ ከስልክዎ ስክሪን ላይ የQR ኮድዎን ይቃኛል።';
+
+  @override
+  String get faqQ3 => 'የQR ኮዱ የሚቆየው ለምን ያህል ጊዜ ነው?';
+
+  @override
+  String get faqA3 => 'ለደህንነት ሲባል እያንዳንዱ የተፈጠረ የQR ኮድ ለ 5 ደቂቃዎች ያገለግላል።';
+
+  @override
+  String get close => 'ዝጋ';
 }

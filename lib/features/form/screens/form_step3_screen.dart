@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:signature/signature.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/routing/app_router.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../utils/number_to_words.dart';
 import '../providers/form_provider.dart';
 
 class FormStep3Screen extends StatefulWidget {
@@ -19,11 +22,11 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
   late TextEditingController _phoneCtrl;
   late TextEditingController _personCtrl;
 
-  String? _selectedSource;
+  String? _selectedSourceKey;
   late SignatureController _signatureController;
   bool _signatureError = false;
 
-  final List<String> _sources = [
+  final List<String> _sourceKeys = [
     'Salary',
     'Business',
     'Remittance',
@@ -36,20 +39,21 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
   void initState() {
     super.initState();
     final p = context.read<FormProvider>();
+
     _amountWordsCtrl = TextEditingController(
       text: p.amountInWords.isNotEmpty
           ? p.amountInWords
-          : 'Two Thousand Six Hundred Thirty Birr Only',
+          : (p.totalAmount > 0
+              ? NumberToWords.convert(p.totalAmount, p.locale.languageCode)
+              : ''),
     );
-    _phoneCtrl = TextEditingController(
-      text: p.phoneNumber.isNotEmpty ? p.phoneNumber : '09 12 34 56 78',
-    );
+    _phoneCtrl = TextEditingController(text: p.phoneNumber);
     _personCtrl = TextEditingController(
       text: p.depositedBy.isNotEmpty
           ? p.depositedBy
-          : (p.accountHolderName.isNotEmpty ? p.accountHolderName : 'Abebe Kebede'),
+          : (p.accountHolderName.isNotEmpty ? p.accountHolderName : ''),
     );
-    _selectedSource = p.sourceOfProceeds.isNotEmpty ? p.sourceOfProceeds : 'Salary';
+    _selectedSourceKey = p.sourceOfProceeds.isNotEmpty ? p.sourceOfProceeds : 'Salary';
 
     _signatureController = SignatureController(
       penStrokeWidth: 2.5,
@@ -67,19 +71,43 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
     super.dispose();
   }
 
-  Future<void> _goToReview() async {
-    if (!_formKey.currentState!.validate()) return;
+  String _getSourceLabel(String key, AppLocalizations l10n) {
+    switch (key) {
+      case 'Salary':
+        return l10n.sourceSalary;
+      case 'Business':
+        return l10n.sourceBusiness;
+      case 'Remittance':
+        return l10n.sourceRemittance;
+      case 'Savings':
+        return l10n.sourceSavings;
+      case 'Investment':
+        return l10n.sourceInvestment;
+      default:
+        return l10n.sourceOther;
+    }
+  }
 
-    if (_signatureController.isEmpty &&
-        context.read<FormProvider>().signatureBytes == null) {
-      setState(() => _signatureError = true);
-    } else {
-      setState(() => _signatureError = false);
+  Future<void> _goToReview() async {
+    final l10n = AppLocalizations.of(context);
+    final p = context.read<FormProvider>();
+
+    final hasSig = _signatureController.isNotEmpty || p.signatureBytes != null;
+    setState(() => _signatureError = !hasSig);
+
+    if (!_formKey.currentState!.validate()) return;
+    if (!hasSig) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n.errorSignatureRequired),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
     }
 
-    final p = context.read<FormProvider>();
     p.setAmountInWords(_amountWordsCtrl.text.trim());
-    p.setSourceOfProceeds(_selectedSource ?? 'Salary');
+    p.setSourceOfProceeds(_selectedSourceKey ?? 'Salary');
     p.setPhoneNumber(_phoneCtrl.text.replaceAll(' ', '').trim());
     p.setDepositedBy(_personCtrl.text.trim());
 
@@ -97,8 +125,17 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final provider = context.watch<FormProvider>();
+    final isDark = provider.isDarkMode;
+    final isAmharic = provider.locale.languageCode == 'am';
+
+    if (_amountWordsCtrl.text.isEmpty && provider.amountInWords.isNotEmpty) {
+      _amountWordsCtrl.text = provider.amountInWords;
+    }
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F6FA),
+      backgroundColor: isDark ? const Color(0xFF0F0024) : const Color(0xFFF7F6FA),
       appBar: AppBar(
         backgroundColor: AppColors.deepRoyalPurple,
         elevation: 0,
@@ -107,9 +144,9 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
               color: Colors.white, size: 20),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Other Details',
-          style: TextStyle(
+        title: Text(
+          l10n.otherDetails,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -125,12 +162,12 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
               width: double.infinity,
               color: AppColors.deepRoyalPurple,
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 14),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Step 3 of 3',
-                    style: TextStyle(
+                    l10n.step3Of3,
+                    style: const TextStyle(
                       color: Color(0xFFD4C8E8),
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -150,9 +187,13 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
                   child: Container(
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: isDark ? const Color(0xFF1D0047) : Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xFFE5E7EB)),
+                      border: Border.all(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.12)
+                            : const Color(0xFFE5E7EB),
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.04),
@@ -165,93 +206,136 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Amount In Words
-                        _buildLabel('Amount in Words'),
+                        _buildLabel(l10n.amountInWords, isDark),
                         const SizedBox(height: 6),
                         TextFormField(
                           controller: _amountWordsCtrl,
                           maxLines: 2,
-                          style: const TextStyle(
-                            color: Color(0xFF1E1435),
+                          style: TextStyle(
+                            color: isDark ? Colors.white : const Color(0xFF1E1435),
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
                           decoration: _inputDecoration(
-                            hint: 'Two Thousand Six Hundred Thirty Birr Only',
+                            hint: isAmharic
+                                ? 'ለምሳሌ አምስት ሺህ ብር ብቻ'
+                                : 'e.g. Five Thousand Birr Only',
+                            isDark: isDark,
                           ),
                           validator: (v) => (v == null || v.trim().isEmpty)
-                              ? 'Please enter amount in words'
+                              ? l10n.errorAmountInWordsRequired
                               : null,
                         ),
                         const SizedBox(height: 16),
 
                         // Source of Proceeds Dropdown
-                        _buildLabel('Source of Proceeds'),
+                        _buildLabel(l10n.sourceOfProceeds, isDark),
                         const SizedBox(height: 6),
                         DropdownButtonFormField<String>(
-                          initialValue: _selectedSource,
-                          style: const TextStyle(
-                            color: Color(0xFF1E1435),
+                          initialValue: _selectedSourceKey,
+                          style: TextStyle(
+                            color: isDark ? Colors.white : const Color(0xFF1E1435),
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
-                          dropdownColor: Colors.white,
-                          decoration: _inputDecoration(hint: 'Select source'),
-                          items: _sources.map((s) {
+                          dropdownColor: isDark ? const Color(0xFF1D0047) : Colors.white,
+                          decoration: _inputDecoration(
+                            hint: l10n.selectSource,
+                            isDark: isDark,
+                          ),
+                          items: _sourceKeys.map((k) {
                             return DropdownMenuItem(
-                              value: s,
-                              child: Text(s),
+                              value: k,
+                              child: Text(_getSourceLabel(k, l10n)),
                             );
                           }).toList(),
                           onChanged: (val) {
-                            setState(() => _selectedSource = val);
+                            setState(() => _selectedSourceKey = val);
                           },
                         ),
                         const SizedBox(height: 16),
 
                         // Telephone Number
-                        _buildLabel('Telephone Number'),
+                        _buildLabel(l10n.telephoneNumber, isDark),
                         const SizedBox(height: 6),
                         TextFormField(
                           controller: _phoneCtrl,
                           keyboardType: TextInputType.phone,
-                          style: const TextStyle(
-                            color: Color(0xFF1E1435),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp(r'[\d\+\s]')),
+                            LengthLimitingTextInputFormatter(16),
+                          ],
+                          style: TextStyle(
+                            color: isDark ? Colors.white : const Color(0xFF1E1435),
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
                           decoration: _inputDecoration(
-                            hint: '09 12 34 56 78',
+                            hint: '0912345678',
+                            isDark: isDark,
                           ),
-                          validator: (v) => (v == null || v.trim().isEmpty)
-                              ? 'Please enter phone number'
-                              : null,
+                          validator: (v) {
+                            final phone = (v ?? '').replaceAll(RegExp(r'\s+'), '');
+                            if (phone.isEmpty) return l10n.errorPhoneRequired;
+                            // Ethiopian phone validation (10 digits starting with 09 or 07, or international format +251)
+                            final ethRegex = RegExp(r'^(?:\+251[79]\d{8}|251[79]\d{8}|0[79]\d{8})$');
+                            if (!ethRegex.hasMatch(phone)) {
+                              return l10n.errorPhoneInvalid;
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 16),
 
-                        // Deposited By
-                        _buildLabel('Deposited By'),
+                        // Deposited By / Withdrawn By
+                        _buildLabel(
+                          (provider.formType.toLowerCase().contains('withdrawal') ||
+                                  provider.formType.contains('ወጪ'))
+                              ? l10n.withdrawnBy
+                              : l10n.depositedBy,
+                          isDark,
+                        ),
                         const SizedBox(height: 6),
                         TextFormField(
                           controller: _personCtrl,
-                          style: const TextStyle(
-                            color: Color(0xFF1E1435),
+                          textCapitalization: TextCapitalization.words,
+                          inputFormatters: [
+                            // Restrict to letters/characters only
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z\s\u1200-\u137F]')),
+                          ],
+                          style: TextStyle(
+                            color: isDark ? Colors.white : const Color(0xFF1E1435),
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
                           decoration: _inputDecoration(
-                            hint: 'Abebe Kebede',
+                            hint: isAmharic ? 'ለምሳሌ አበበ ከበደ' : 'e.g. Abebe Kebede',
+                            isDark: isDark,
                           ),
-                          validator: (v) => (v == null || v.trim().isEmpty)
-                              ? 'Please enter depositor name'
-                              : null,
+                          validator: (v) {
+                            final trimmed = v?.trim() ?? '';
+                            if (trimmed.isEmpty) return l10n.errorDepositorRequired;
+                            if (!RegExp(r'^[a-zA-Z\s\u1200-\u137F]+$').hasMatch(trimmed)) {
+                              return l10n.errorLettersOnly;
+                            }
+                            if (trimmed.length < 3) return l10n.errorMin3Chars;
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 18),
 
-                        // Deposited By Signature
+                        // Deposited By / Account Holder Signature
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _buildLabel('Deposited By Signature'),
+                            _buildLabel(
+                              (provider.formType.toLowerCase().contains('withdrawal') ||
+                                      provider.formType.contains('ወጪ'))
+                                  ? l10n.accountHolderSignature
+                                  : l10n.depositedBySignature,
+                              isDark,
+                            ),
                             TextButton(
                               onPressed: () {
                                 _signatureController.clear();
@@ -262,9 +346,9 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
                                 minimumSize: const Size(44, 28),
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                              child: const Text(
-                                'Clear',
-                                style: TextStyle(
+                              child: Text(
+                                l10n.clear,
+                                style: const TextStyle(
                                   color: Color(0xFF6B7280),
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
@@ -277,19 +361,22 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
                         Container(
                           height: 100,
                           decoration: BoxDecoration(
-                            color: const Color(0xFFFAFAFA),
+                            color: isDark ? const Color(0xFF230545) : const Color(0xFFFAFAFA),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: _signatureError
                                   ? AppColors.error
-                                  : const Color(0xFFE5E7EB),
+                                  : (isDark
+                                      ? Colors.white.withValues(alpha: 0.15)
+                                      : const Color(0xFFE5E7EB)),
                             ),
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Signature(
                               controller: _signatureController,
-                              backgroundColor: const Color(0xFFFAFAFA),
+                              backgroundColor:
+                                  isDark ? const Color(0xFF230545) : const Color(0xFFFAFAFA),
                             ),
                           ),
                         ),
@@ -303,9 +390,13 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
             // Bottom Buttons: Back & Review
             Container(
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                border: Border(top: BorderSide(color: Color(0xFFE5E7EB))),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF160036) : Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE5E7EB),
+                  ),
+                ),
               ),
               child: Row(
                 children: [
@@ -316,15 +407,17 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
                       child: OutlinedButton(
                         onPressed: () => context.pop(),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF1E1435),
-                          side: const BorderSide(color: Color(0xFFD1D5DB)),
+                          foregroundColor: isDark ? Colors.white : const Color(0xFF1E1435),
+                          side: BorderSide(
+                            color: isDark ? Colors.white.withValues(alpha: 0.2) : const Color(0xFFD1D5DB),
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
                           ),
                         ),
-                        child: const Text(
-                          'Back',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.back,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                           ),
@@ -348,9 +441,9 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
                             borderRadius: BorderRadius.circular(25),
                           ),
                         ),
-                        child: const Text(
-                          'Review',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.review,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                           ),
@@ -367,18 +460,18 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
     );
   }
 
-  Widget _buildLabel(String text) {
+  Widget _buildLabel(String text, bool isDark) {
     return Text(
       text,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w600,
-        color: Color(0xFF374151),
+        color: isDark ? Colors.white : const Color(0xFF374151),
       ),
     );
   }
 
-  InputDecoration _inputDecoration({required String hint}) {
+  InputDecoration _inputDecoration({required String hint, required bool isDark}) {
     return InputDecoration(
       hintText: hint,
       hintStyle: const TextStyle(
@@ -387,18 +480,22 @@ class _FormStep3ScreenState extends State<FormStep3Screen> {
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       filled: true,
-      fillColor: Colors.white,
+      fillColor: isDark ? Colors.white.withValues(alpha: 0.08) : Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+        borderSide: BorderSide(
+          color: isDark ? Colors.white.withValues(alpha: 0.15) : const Color(0xFFE5E7EB),
+        ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+        borderSide: BorderSide(
+          color: isDark ? Colors.white.withValues(alpha: 0.15) : const Color(0xFFE5E7EB),
+        ),
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: AppColors.deepRoyalPurple, width: 1.5),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderSide: BorderSide(color: AppColors.deepRoyalPurple, width: 1.5),
       ),
     );
   }

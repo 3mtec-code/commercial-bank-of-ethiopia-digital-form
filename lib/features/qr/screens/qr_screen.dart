@@ -8,6 +8,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../features/form/providers/form_provider.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../utils/pdf_generator.dart';
 
 class QrScreen extends StatefulWidget {
@@ -48,7 +49,7 @@ class _QrScreenState extends State<QrScreen> {
     return '${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}';
   }
 
-  Future<void> _downloadPdf() async {
+  Future<void> _downloadPdf(AppLocalizations l10n) async {
     final p = context.read<FormProvider>();
     final tx = p.currentTransaction;
     if (tx == null) return;
@@ -60,7 +61,7 @@ class _QrScreenState extends State<QrScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to export PDF: $e'),
+            content: Text('${l10n.errorExportPdf}: $e'),
             backgroundColor: AppColors.error,
           ),
         );
@@ -72,20 +73,23 @@ class _QrScreenState extends State<QrScreen> {
     }
   }
 
-  void _copyReference(String ref) {
+  void _copyReference(String ref, AppLocalizations l10n) {
     Clipboard.setData(ClipboardData(text: ref));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Reference number copied to clipboard!'),
+      SnackBar(
+        content: Text(l10n.refCopied),
         backgroundColor: AppColors.accentGreen,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final formProvider = context.watch<FormProvider>();
+    final isDark = formProvider.isDarkMode;
+
     final tx = formProvider.currentTransaction;
     final qrData = formProvider.generatedQrData.isNotEmpty
         ? formProvider.generatedQrData
@@ -93,13 +97,13 @@ class _QrScreenState extends State<QrScreen> {
     final refNumber = tx?.referenceNumber ?? 'TXN-20260721-000123';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F6FA),
+      backgroundColor: isDark ? const Color(0xFF0F0024) : const Color(0xFFF7F6FA),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close_rounded,
-              color: Color(0xFF1E1435), size: 24),
+          icon: Icon(Icons.close_rounded,
+              color: isDark ? Colors.white : const Color(0xFF1E1435), size: 24),
           onPressed: () {
             formProvider.resetForm();
             context.go(AppRoutes.home);
@@ -132,10 +136,10 @@ class _QrScreenState extends State<QrScreen> {
                     const SizedBox(height: 14),
 
                     // "Form Submitted Successfully!"
-                    const Text(
-                      'Form Submitted\nSuccessfully!',
+                    Text(
+                      l10n.formSubmittedSuccess,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
                         color: Color(0xFF10B981),
@@ -145,25 +149,36 @@ class _QrScreenState extends State<QrScreen> {
                     const SizedBox(height: 12),
 
                     // Reference Number
-                    const Text(
-                      'Reference Number',
+                    Text(
+                      l10n.referenceNumber,
                       style: TextStyle(
                         fontSize: 12,
-                        color: Color(0xFF6B7280),
+                        color: isDark ? const Color(0xFFB8A9D4) : const Color(0xFF6B7280),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(height: 4),
                     GestureDetector(
-                      onTap: () => _copyReference(refNumber),
-                      child: Text(
-                        refNumber,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF1E1435),
-                          letterSpacing: 0.5,
-                        ),
+                      onTap: () => _copyReference(refNumber, l10n),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            refNumber,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: isDark ? Colors.white : const Color(0xFF1E1435),
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Icon(
+                            Icons.copy_rounded,
+                            size: 14,
+                            color: isDark ? AppColors.goldAccent : const Color(0xFF6B7280),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -172,9 +187,13 @@ class _QrScreenState extends State<QrScreen> {
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDark ? const Color(0xFF1D0047) : Colors.white,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: const Color(0xFFE5E7EB)),
+                        border: Border.all(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.12)
+                              : const Color(0xFFE5E7EB),
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withValues(alpha: 0.05),
@@ -206,11 +225,11 @@ class _QrScreenState extends State<QrScreen> {
                     const SizedBox(height: 16),
 
                     // "Scan this QR code at the bank"
-                    const Text(
-                      'Scan this QR code at the bank',
+                    Text(
+                      l10n.scanQrAtBank,
                       style: TextStyle(
                         fontSize: 13,
-                        color: Color(0xFF6B7280),
+                        color: isDark ? const Color(0xFFB8A9D4) : const Color(0xFF6B7280),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -221,12 +240,14 @@ class _QrScreenState extends State<QrScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 14, vertical: 6),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFFBEB),
+                        color: isDark ? const Color(0xFF331B05) : const Color(0xFFFFFBEB),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: const Color(0xFFFDE68A)),
+                        border: Border.all(
+                          color: isDark ? const Color(0xFF92400E) : const Color(0xFFFDE68A),
+                        ),
                       ),
                       child: Text(
-                        'Expires in   $_timerDisplay',
+                        '${l10n.expiresIn}   $_timerDisplay',
                         style: const TextStyle(
                           color: Color(0xFFD97706),
                           fontSize: 13,
@@ -243,9 +264,13 @@ class _QrScreenState extends State<QrScreen> {
             // Bottom Buttons: Download PDF & Done
             Container(
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                border: Border(top: BorderSide(color: Color(0xFFE5E7EB))),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF160036) : Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE5E7EB),
+                  ),
+                ),
               ),
               child: Row(
                 children: [
@@ -254,10 +279,12 @@ class _QrScreenState extends State<QrScreen> {
                     child: SizedBox(
                       height: 50,
                       child: OutlinedButton(
-                        onPressed: _isDownloading ? null : _downloadPdf,
+                        onPressed: _isDownloading ? null : () => _downloadPdf(l10n),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF1E1435),
-                          side: const BorderSide(color: Color(0xFFD1D5DB)),
+                          foregroundColor: isDark ? Colors.white : const Color(0xFF1E1435),
+                          side: BorderSide(
+                            color: isDark ? Colors.white.withValues(alpha: 0.2) : const Color(0xFFD1D5DB),
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
                           ),
@@ -268,9 +295,9 @@ class _QrScreenState extends State<QrScreen> {
                                 height: 20,
                                 child: CircularProgressIndicator(strokeWidth: 2),
                               )
-                            : const Text(
-                                'Download PDF',
-                                style: TextStyle(
+                            : Text(
+                                l10n.downloadPdf,
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -297,9 +324,9 @@ class _QrScreenState extends State<QrScreen> {
                             borderRadius: BorderRadius.circular(25),
                           ),
                         ),
-                        child: const Text(
-                          'Done',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.done,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                           ),

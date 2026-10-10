@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../features/form/providers/form_provider.dart';
-import '../../../shared/widgets/cbe_logo.dart';
-import '../../../shared/widgets/glow_sparkle.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -64,232 +62,148 @@ class _SplashScreenState extends State<SplashScreen>
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
-          gradient: AppColors.purpleBackgroundGradient,
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF3B0066),
+              Color(0xFF1E0038),
+            ],
+          ),
         ),
-        child: SmogGlowBackground(
-          primarySmog: const Color(0x25FFB800),
-          secondarySmog: const Color(0x204A0E78),
-          child: SafeArea(
-            child: Column(
-              children: [
-                // Top Security Badge
-                Padding(
-                  padding: const EdgeInsets.only(top: 16, right: 16),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: AppColors.goldAccent.withValues(alpha: 0.4),
-                        ),
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.lock_rounded,
-                              color: AppColors.goldAccent, size: 14),
-                          SizedBox(width: 6),
-                          Text(
-                            'Secure Bank',
-                            style: TextStyle(
-                              color: AppColors.crispWhite,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              const Spacer(flex: 3),
 
-                const Spacer(flex: 2),
-
-                // Logo with Glowing Aura
-                AnimatedBuilder(
-                  animation: _controller,
-                  builder: (context, child) => Opacity(
-                    opacity: _fadeAnim.value,
-                    child: Transform.translate(
-                      offset: Offset(0, _slideAnim.value),
-                      child: Transform.scale(
-                        scale: _scaleAnim.value,
-                        child: child,
-                      ),
-                    ),
-                  ),
-                  child: const GlowingContainer(
-                    glowColor: AppColors.goldAccent,
-                    blurRadius: 28,
-                    spreadRadius: 2,
-                    child: CbeLogo(size: 96),
-                  ),
-                ),
-
-                const SizedBox(height: 28),
-
-                // Bank Title & Service Title
-                AnimatedBuilder(
-                  animation: _controller,
-                  builder: (context, child) => Opacity(
-                    opacity: _fadeAnim.value,
-                    child: Transform.translate(
-                      offset: Offset(0, _slideAnim.value * 1.3),
+              // Float the CBE golden medallion logo transparently directly on purple gradient
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) => Opacity(
+                  opacity: _fadeAnim.value,
+                  child: Transform.translate(
+                    offset: Offset(0, _slideAnim.value),
+                    child: Transform.scale(
+                      scale: _scaleAnim.value,
                       child: child,
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      const Text(
-                        'የኢትዮጵያ ንግድ ባንክ',
-                        style: TextStyle(
-                          color: AppColors.goldAccent,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        'COMMERCIAL BANK OF ETHIOPIA',
-                        style: TextStyle(
-                          color: AppColors.crispWhite,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Digital Banking Form Service',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w900,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 16),
-                      // Tagline matching infographic
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: AppColors.goldAccent.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: AppColors.goldAccent.withValues(alpha: 0.4),
-                          ),
-                        ),
-                        child: const Text(
-                          'Easy • Secure • Fast',
-                          style: TextStyle(
-                            color: AppColors.goldAccent,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 1.5,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
+                child: Image.asset(
+                  'assets/images/cbe_logo.png',
+                  width: 180,
+                  height: 180,
+                  fit: BoxFit.contain,
+                ),
+              ),
 
-                const Spacer(flex: 2),
+              const SizedBox(height: 28),
 
-                // Reassurance Card
-                AnimatedBuilder(
-                  animation: _controller,
-                  builder: (ctx, child) => Opacity(
-                    opacity: _fadeAnim.value,
+              // Brand Typography & Text Styling
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) => Opacity(
+                  opacity: _fadeAnim.value,
+                  child: Transform.translate(
+                    offset: Offset(0, _slideAnim.value * 1.3),
                     child: child,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.14),
-                        ),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.shield_outlined,
-                              color: AppColors.goldAccent, size: 18),
-                          SizedBox(width: 10),
-                          Text(
-                            'Your transaction is safe with us',
-                            style: TextStyle(
-                              color: AppColors.crispWhite,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
+                ),
+                child: const Column(
+                  children: [
+                    Text(
+                      'የኢትዮጵያ ንግድ ባንክ',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFFFBBF24),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
+                    SizedBox(height: 4),
+                    Text(
+                      'COMMERCIAL BANK OF ETHIOPIA',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Digital Banking Form Service',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    Text(
+                      'Easy • Secure • Fast',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFFFBBF24),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
+              ),
 
-                const SizedBox(height: 24),
+              const Spacer(flex: 4),
 
-                // Language Selection Pills
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 400),
-                  child: _showLanguageButtons
-                      ? Padding(
-                          key: const ValueKey('lang-buttons'),
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: _LangButton(
-                                  label: 'English',
-                                  isSelected: true,
-                                  onTap: () => _selectLanguage(
-                                    context,
-                                    const Locale('en'),
-                                  ),
+              // Language Selection Buttons
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 400),
+                child: _showLanguageButtons
+                    ? Padding(
+                        key: const ValueKey('lang-buttons'),
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: _LangButton(
+                                label: 'English',
+                                isSelected: context.watch<FormProvider>().locale.languageCode == 'en',
+                                onTap: () => _selectLanguage(
+                                  context,
+                                  const Locale('en'),
                                 ),
                               ),
-                              const SizedBox(width: 14),
-                              Expanded(
-                                child: _LangButton(
-                                  label: 'አማርኛ',
-                                  isSelected: false,
-                                  onTap: () => _selectLanguage(
-                                    context,
-                                    const Locale('am'),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : const SizedBox(
-                          key: ValueKey('loading'),
-                          height: 54,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.goldAccent,
-                              strokeWidth: 2,
                             ),
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: _LangButton(
+                                label: 'አማርኛ',
+                                isSelected: context.watch<FormProvider>().locale.languageCode == 'am',
+                                onTap: () => _selectLanguage(
+                                  context,
+                                  const Locale('am'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox(
+                        key: ValueKey('loading'),
+                        height: 54,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFFBBF24),
+                            strokeWidth: 2,
                           ),
                         ),
-                ),
+                      ),
+              ),
 
-                const SizedBox(height: 36),
-              ],
-            ),
+              const SizedBox(height: 36),
+            ],
           ),
         ),
       ),

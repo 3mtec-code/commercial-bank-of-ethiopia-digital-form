@@ -8,8 +8,6 @@ import '../../features/form/screens/form_step2_screen.dart';
 import '../../features/form/screens/form_step3_screen.dart';
 import '../../features/review/screens/review_screen.dart';
 import '../../features/qr/screens/qr_screen.dart';
-import '../../features/teller/screens/teller_scan_screen.dart';
-import '../../features/teller/screens/teller_verify_screen.dart';
 import '../../features/history/screens/history_screen.dart';
 
 class AppRoutes {
@@ -22,8 +20,6 @@ class AppRoutes {
   static const String review = '/review';
   static const String qrCode = '/qr-code';
   static const String qr = qrCode;
-  static const String tellerScan = '/teller/scan';
-  static const String tellerVerify = '/teller/verify';
   static const String history = '/history';
 }
 
@@ -86,23 +82,6 @@ final GoRouter appRouter = GoRouter(
         state,
         const QrScreen(),
       ),
-    ),
-    GoRoute(
-      path: AppRoutes.tellerScan,
-      pageBuilder: (context, state) => _slideTransition(
-        state,
-        const TellerScanScreen(),
-      ),
-    ),
-    GoRoute(
-      path: AppRoutes.tellerVerify,
-      pageBuilder: (context, state) {
-        final payload = state.extra as Map<String, dynamic>?;
-        return _slideTransition(
-          state,
-          TellerVerifyScreen(payload: payload ?? {}),
-        );
-      },
     ),
     GoRoute(
       path: AppRoutes.history,

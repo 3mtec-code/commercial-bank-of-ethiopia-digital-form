@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:encrypt/encrypt.dart' as enc;
 import '../models/transaction_model.dart';
@@ -9,12 +10,110 @@ import '../../../core/constants/app_constants.dart';
 import '../../utils/number_to_words.dart';
 
 class FormProvider extends ChangeNotifier {
+  static const String _prefKeyLocale = 'app_locale';
+  static const String _prefKeyTheme = 'app_theme_mode';
+  static const String _prefKeyNotifications = 'app_notifications';
+
+  final SharedPreferences? _prefs;
+
+  FormProvider({SharedPreferences? prefs}) : _prefs = prefs {
+    if (prefs != null) {
+      _loadFromPrefs(prefs);
+    } else {
+      _initPreferences();
+    }
+  }
+
+  void _loadFromPrefs(SharedPreferences prefs) {
+    final savedLocale = prefs.getString(_prefKeyLocale);
+    if (savedLocale == 'am' || savedLocale == 'en') {
+      _locale = Locale(savedLocale!);
+    }
+
+    final savedTheme = prefs.getString(_prefKeyTheme);
+    if (savedTheme == 'dark') {
+      _themeMode = ThemeMode.dark;
+    } else if (savedTheme == 'light') {
+      _themeMode = ThemeMode.light;
+    }
+
+    final savedNotif = prefs.getBool(_prefKeyNotifications);
+    if (savedNotif != null) {
+      _notificationsEnabled = savedNotif;
+    }
+  }
+
+  Future<void> _initPreferences() async {
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      _loadFromPrefs(prefs);
+      notifyListeners();
+    } catch (_) {}
+  }
+
   // ── Language ──────────────────────────────────────────────────────────────
   Locale _locale = const Locale('en');
   Locale get locale => _locale;
-  void setLocale(Locale locale) {
-    _locale = locale;
+
+  Future<void> setLocale(Locale newLocale) async {
+    if (_locale == newLocale) return;
+    _locale = newLocale;
+    if (_totalAmount > 0) {
+      _amountInWords = NumberToWords.convert(_totalAmount, _locale.languageCode);
+      _binInWords = _amountInWords;
+    }
     notifyListeners();
+
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      await prefs.setString(_prefKeyLocale, newLocale.languageCode);
+    } catch (_) {}
+  }
+
+  void toggleLocale() {
+    if (_locale.languageCode == 'am') {
+      setLocale(const Locale('en'));
+    } else {
+      setLocale(const Locale('am'));
+    }
+  }
+
+  // ── Theme Mode ────────────────────────────────────────────────────────────
+  ThemeMode _themeMode = ThemeMode.light;
+  ThemeMode get themeMode => _themeMode;
+  bool get isDarkMode => _themeMode == ThemeMode.dark;
+
+  Future<void> setThemeMode(ThemeMode mode) async {
+    _themeMode = mode;
+    notifyListeners();
+
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      await prefs.setString(
+          _prefKeyTheme, mode == ThemeMode.dark ? 'dark' : 'light');
+    } catch (_) {}
+  }
+
+  Future<void> toggleTheme() async {
+    if (_themeMode == ThemeMode.dark) {
+      await setThemeMode(ThemeMode.light);
+    } else {
+      await setThemeMode(ThemeMode.dark);
+    }
+  }
+
+  // ── Push Notifications ────────────────────────────────────────────────────
+  bool _notificationsEnabled = true;
+  bool get notificationsEnabled => _notificationsEnabled;
+
+  Future<void> setNotificationsEnabled(bool value) async {
+    _notificationsEnabled = value;
+    notifyListeners();
+
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      await prefs.setBool(_prefKeyNotifications, value);
+    } catch (_) {}
   }
 
   // ── Form Type ─────────────────────────────────────────────────────────────
@@ -44,7 +143,15 @@ class FormProvider extends ChangeNotifier {
   void setAccountNumber(String v) { _accountNumber = v; notifyListeners(); }
   void setAccountType(String v) { _accountType = v; notifyListeners(); }
 
-  // ── Step 2: Denominations ─────────────────────────────────────────────────
+  // ── Step 2: Denominations & Amount Mode ────────────────────────────────────
+  // Mode: 0 = Quick Preset Amounts, 1 = Manual Custom Entry
+  int _denominationInputMode = 0;
+  int get denominationInputMode => _denominationInputMode;
+  void setDenominationInputMode(int mode) {
+    _denominationInputMode = mode;
+    notifyListeners();
+  }
+
   Map<double, int> _denominationQty = {
     200: 0, 100: 0, 50: 0, 10: 0, 5: 0,
     1: 0, 0.50: 0, 0.25: 0, 0.10: 0, 0.05: 0,
@@ -57,6 +164,18 @@ class FormProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void resetDenominations() {
+    _denominationQty = {
+      200: 0, 100: 0, 50: 0, 10: 0, 5: 0,
+      1: 0, 0.50: 0, 0.25: 0, 0.10: 0, 0.05: 0,
+    };
+    _totalAmount = 0.0;
+    _amountInWords = '';
+    _binInFigure = '0.00';
+    _binInWords = '';
+    notifyListeners();
+  }
+
   double _totalAmount = 0.0;
   double get totalAmount => _totalAmount;
 
@@ -65,6 +184,38 @@ class FormProvider extends ChangeNotifier {
         .fold(0.0, (sum, e) => sum + e.key * e.value);
     _amountInWords = NumberToWords.convert(_totalAmount, _locale.languageCode);
     _binInFigure = _totalAmount.toStringAsFixed(2);
+    _binInWords = _amountInWords;
+  }
+
+  /// Sets preset amount and computes standard denomination breakdown
+  void setPresetAmount(double amount) {
+    setManualAmount(amount);
+  }
+
+  /// Sets manual custom amount freely
+  void setManualAmount(double amount) {
+    _totalAmount = amount < 0 ? 0.0 : amount;
+    _amountInWords = NumberToWords.convert(_totalAmount, _locale.languageCode);
+    _binInFigure = _totalAmount.toStringAsFixed(2);
+    _binInWords = _amountInWords;
+
+    // Auto calculate breakdown into bills
+    double remaining = _totalAmount;
+    final Map<double, int> newQty = {
+      200: 0, 100: 0, 50: 0, 10: 0, 5: 0,
+      1: 0, 0.50: 0, 0.25: 0, 0.10: 0, 0.05: 0,
+    };
+
+    for (final denom in [200.0, 100.0, 50.0, 10.0, 5.0, 1.0]) {
+      if (remaining >= denom) {
+        final count = (remaining / denom).floor();
+        newQty[denom] = count;
+        remaining = double.parse((remaining - count * denom).toStringAsFixed(2));
+      }
+    }
+    _denominationQty = newQty;
+
+    notifyListeners();
   }
 
   // ── Step 3 Fields ─────────────────────────────────────────────────────────
@@ -126,7 +277,9 @@ class FormProvider extends ChangeNotifier {
       accountType: _accountType,
       denominations: denomMap,
       totalAmount: _totalAmount,
-      amountInWords: _amountInWords,
+      amountInWords: _amountInWords.isNotEmpty
+          ? _amountInWords
+          : NumberToWords.convert(_totalAmount, _locale.languageCode),
       sourceOfProceeds: _sourceOfProceeds,
       phoneNumber: _phoneNumber,
       depositedBy: _depositedBy,
@@ -137,8 +290,10 @@ class FormProvider extends ChangeNotifier {
       status: 'pending',
       createdAt: now,
       expiresAt: expires,
-      binInFigure: _binInFigure,
-      binInWords: _binInWords,
+      binInFigure: _binInFigure.isNotEmpty ? _binInFigure : _totalAmount.toStringAsFixed(2),
+      binInWords: _binInWords.isNotEmpty
+          ? _binInWords
+          : NumberToWords.convert(_totalAmount, _locale.languageCode),
     );
 
     // Encrypt payload
@@ -219,6 +374,16 @@ class FormProvider extends ChangeNotifier {
     }
   }
 
+  // ── Clear Cache / Storage ─────────────────────────────────────────────────
+  Future<void> clearCacheAndStorage() async {
+    final box = await Hive.openBox<TransactionModel>(AppConstants.transactionBox);
+    await box.clear();
+    _transactions = [];
+    resetForm();
+    await loadTransactions();
+    notifyListeners();
+  }
+
   // ── Reset ─────────────────────────────────────────────────────────────────
   void resetForm() {
     _branch = '';
@@ -226,6 +391,7 @@ class FormProvider extends ChangeNotifier {
     _accountHolderName = '';
     _accountNumber = '';
     _accountType = AppConstants.accountTypes[0];
+    _denominationInputMode = 0;
     _denominationQty = {
       200: 0, 100: 0, 50: 0, 10: 0, 5: 0,
       1: 0, 0.50: 0, 0.25: 0, 0.10: 0, 0.05: 0,

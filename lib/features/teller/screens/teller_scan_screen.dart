@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/routing/app_router.dart';
 import '../../../features/form/providers/form_provider.dart';
 import '../../../shared/widgets/cbe_logo.dart';
 
@@ -77,7 +76,7 @@ class _TellerScanScreenState extends State<TellerScanScreen>
       // Continue if date format is custom
     }
 
-    context.push(AppRoutes.tellerVerify, extra: payload);
+    context.push('/teller/verify', extra: payload);
   }
 
   void _simulateScan() {
@@ -104,7 +103,7 @@ class _TellerScanScreenState extends State<TellerScanScreen>
         'expiresAt': DateTime.now().add(const Duration(minutes: 5)).toIso8601String(),
         'denominations': {'200': 20, '100': 10},
       };
-      context.push(AppRoutes.tellerVerify, extra: demoPayload);
+      context.push('/teller/verify', extra: demoPayload);
     }
   }
 

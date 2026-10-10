@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/routing/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/form/models/transaction_model.dart';
 import 'features/form/providers/form_provider.dart';
+import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,9 +32,12 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TransactionModelAdapter());
 
+  // Initialize SharedPreferences for immediate persistence
+  final prefs = await SharedPreferences.getInstance();
+
   runApp(
     ChangeNotifierProvider(
-      create: (_) => FormProvider(),
+      create: (_) => FormProvider(prefs: prefs),
       child: const CbeDigitalFormApp(),
     ),
   );
@@ -43,17 +48,20 @@ class CbeDigitalFormApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final locale = context.watch<FormProvider>().locale;
+    final provider = context.watch<FormProvider>();
 
     return MaterialApp.router(
       title: 'CBE Digital Form',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: provider.themeMode,
       routerConfig: appRouter,
 
       // Localizations
-      locale: locale,
+      locale: provider.locale,
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
